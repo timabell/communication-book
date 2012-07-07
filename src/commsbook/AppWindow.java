@@ -69,6 +69,9 @@ public class AppWindow {
 				try {
 					AppWindow window = new AppWindow(args);
 					if (window.frame != null){ // will be null if not showing the UI.
+						// maximise the window - ref http://stackoverflow.com/a/5207711/10245
+						window.frame.setExtendedState(window.frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+						//show
 						window.frame.setVisible(true);
 					}
 				} catch (Exception e) {
