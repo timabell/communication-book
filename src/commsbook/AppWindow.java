@@ -67,13 +67,7 @@ public class AppWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AppWindow window = new AppWindow(args);
-					if (window.frame != null){ // will be null if not showing the UI.
-						// maximise the window - ref http://stackoverflow.com/a/5207711/10245
-						window.frame.setExtendedState(window.frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-						//show
-						window.frame.setVisible(true);
-					}
+					new AppWindow(args);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -100,6 +94,10 @@ public class AppWindow {
 			File path = new File(libraryPathArg);
 			loadCategory(path);
 		}
+		// maximise the window - ref http://stackoverflow.com/a/5207711/10245
+		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		//show
+		frame.setVisible(true);
 	}
 
 	/**
@@ -107,8 +105,10 @@ public class AppWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Communication Book");
 
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
