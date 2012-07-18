@@ -30,6 +30,8 @@ import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 import javax.swing.border.BevelBorder;
 
+import ui.MainWindow;
+
 
 import commsbook.model.Category;
 import commsbook.model.CategoryItem;
@@ -67,7 +69,9 @@ public class AppWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new AppWindow(args);
+					JFrame window = new MainWindow();
+					// window.setVisible(true); // TODO new window
+					new AppWindow(args); // old window
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
