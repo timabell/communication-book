@@ -69,9 +69,9 @@ public class AppWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFrame window = new MainWindow();
-					// window.setVisible(true); // TODO new window
-					new AppWindow(args); // old window
+					//JFrame window = new MainWindow();
+					//window.setVisible(true);
+					new AppWindow(args);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -110,7 +110,7 @@ public class AppWindow {
 	private void initialize() {
 		frame = new JFrame();
 
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 623, 464);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Communication Book");
 
@@ -147,69 +147,68 @@ public class AppWindow {
 		mnHelp.add(mntmAbout);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 
-		JPanel statusPanel = new JPanel();
-		statusPanel.setBorder(BorderFactory.createLoweredBevelBorder());
-		frame.getContentPane().add(statusPanel, BorderLayout.SOUTH);
-		statusPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-
-		JProgressBar progressBar = new JProgressBar();
-		statusPanel.add(progressBar);
-
 		JPanel panel_container = new JPanel();
 		frame.getContentPane().add(panel_container, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_container = new GridBagLayout();
-		gbl_panel_container.columnWidths = new int[] { 0, 0, 0 };
-		gbl_panel_container.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
-		gbl_panel_container.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
-		gbl_panel_container.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0, 0.0,
-				Double.MIN_VALUE };
+		gbl_panel_container.columnWidths = new int[] { 100, 300 };
+		gbl_panel_container.rowHeights = new int[] { 10, 110, 10, 300 };
+		gbl_panel_container.columnWeights = new double[] { Double.MIN_VALUE, 1.0 };
+		gbl_panel_container.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0 };
 		panel_container.setLayout(gbl_panel_container);
 
 		JLabel lblNewLabel = new JLabel(
-				"Sentence:   (click item to remove)");
+				"Sentence:   (click to remove a symbol)");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblNewLabel.gridwidth = 2;
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.insets = new Insets(5, 0, 5, 0);
+		gbc_lblNewLabel.gridx = 1;
 		gbc_lblNewLabel.gridy = 0;
 		panel_container.add(lblNewLabel, gbc_lblNewLabel);
-
-		panel_sentence = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_sentence.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEADING);
-		panel_sentence.setBackground(Color.WHITE);
-		panel_sentence.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		GridBagConstraints gbc_panel_sentence = new GridBagConstraints();
-		gbc_panel_sentence.insets = new Insets(0, 0, 5, 5);
-		gbc_panel_sentence.fill = GridBagConstraints.BOTH;
-		gbc_panel_sentence.gridx = 0;
-		gbc_panel_sentence.gridy = 1;
-		panel_container.add(panel_sentence, gbc_panel_sentence);
-
-		JButton btnNewButton = new JButton("Speak");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Component[] components = panel_sentence.getComponents();
-				String sentence = "";
-				for (Component component : components){
-					sentence = sentence + ((JButton)component).getText() + " ";
-				}
-				speakSentence(sentence);
-			}
-		});
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.fill = GridBagConstraints.BOTH;
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton.gridx = 1;
-		gbc_btnNewButton.gridy = 1;
-		panel_container.add(btnNewButton, gbc_btnNewButton);
 		
-		JLabel lblLib = new JLabel("Choose symbol / category:");
+				JButton btnNewButton = new JButton("Speak");
+				btnNewButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						Component[] components = panel_sentence.getComponents();
+						String sentence = "";
+						for (Component component : components){
+							sentence = sentence + ((JButton)component).getText() + " ";
+						}
+						speakSentence(sentence);
+					}
+				});
+				GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+				gbc_btnNewButton.gridheight = 2;
+				gbc_btnNewButton.fill = GridBagConstraints.BOTH;
+				gbc_btnNewButton.insets = new Insets(5, 5, 5, 5);
+				gbc_btnNewButton.gridx = 0;
+				gbc_btnNewButton.gridy = 0;
+				panel_container.add(btnNewButton, gbc_btnNewButton);
+		
+				panel_sentence = new JPanel();
+				FlowLayout flowLayout_1 = (FlowLayout) panel_sentence.getLayout();
+				flowLayout_1.setAlignment(FlowLayout.LEADING);
+				panel_sentence.setBackground(Color.WHITE);
+				panel_sentence.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				GridBagConstraints gbc_panel_sentence = new GridBagConstraints();
+				gbc_panel_sentence.insets = new Insets(0, 0, 5, 5);
+				gbc_panel_sentence.fill = GridBagConstraints.BOTH;
+				gbc_panel_sentence.gridx = 1;
+				gbc_panel_sentence.gridy = 1;
+				panel_container.add(panel_sentence, gbc_panel_sentence);
+		
+		JLabel lblUp = new JLabel("Back to:");
+		GridBagConstraints gbc_lblUp = new GridBagConstraints();
+		gbc_lblUp.anchor = GridBagConstraints.WEST;
+		gbc_lblUp.insets = new Insets(0, 5, 5, 5);
+		gbc_lblUp.gridx = 0;
+		gbc_lblUp.gridy = 2;
+		panel_container.add(lblUp, gbc_lblUp);
+		
+		JLabel lblLib = new JLabel("Symbols and categories, click to select:");
 		GridBagConstraints gbc_lblLib = new GridBagConstraints();
 		gbc_lblLib.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblLib.insets = new Insets(0, 0, 5, 5);
-		gbc_lblLib.gridx = 0;
+		gbc_lblLib.gridx = 1;
 		gbc_lblLib.gridy = 2;
 		panel_container.add(lblLib, gbc_lblLib);
 		
@@ -219,35 +218,22 @@ public class AppWindow {
 				panel_category.setBackground(Color.WHITE);
 				panel_category.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				GridBagConstraints gbc_panel_library = new GridBagConstraints();
-				gbc_panel_library.insets = new Insets(0, 0, 5, 0);
-				gbc_panel_library.gridwidth = 2;
+				gbc_panel_library.insets = new Insets(0, 0, 5, 5);
 				gbc_panel_library.fill = GridBagConstraints.BOTH;
-				gbc_panel_library.gridx = 0;
+				gbc_panel_library.gridx = 1;
 				gbc_panel_library.gridy = 3;
 				panel_container.add(panel_category, gbc_panel_library);
-
-		JLabel lblNewLabel_1 = new JLabel(
-				"Choose previous category:");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblNewLabel_1.gridwidth = 2;
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_1.gridx = 0;
-		gbc_lblNewLabel_1.gridy = 4;
-		panel_container.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		panel_path = new JPanel();
 		panel_path.setBackground(Color.WHITE);
 		panel_path.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		FlowLayout flowLayout_2 = (FlowLayout) panel_path.getLayout();
-		flowLayout_2.setAlignment(FlowLayout.LEADING);
 		GridBagConstraints gbc_panel_path = new GridBagConstraints();
-		gbc_panel_path.gridwidth = 2;
-		gbc_panel_path.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_path.insets = new Insets(0, 5, 5, 5);
 		gbc_panel_path.fill = GridBagConstraints.BOTH;
 		gbc_panel_path.gridx = 0;
-		gbc_panel_path.gridy = 5;
+		gbc_panel_path.gridy = 3;
 		panel_container.add(panel_path, gbc_panel_path);
+		panel_path.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 	}
 
 	protected void speakSentence(String sentence) {
