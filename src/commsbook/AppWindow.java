@@ -54,6 +54,7 @@ public class AppWindow {
 	private JPanel panel_category;
 	private JPanel panel_sentence;
 	private JPanel panel_path;
+	private final Insets symbolInsets = new Insets(1, 2, 1, 2);
 	
 	@Parameter(names={"-library", "-l"}, description="path to library to open")
 	private String libraryPathArg;
@@ -276,6 +277,7 @@ public class AppWindow {
 		pathItemButton.setVerticalAlignment(JButton.BOTTOM);
 		pathItemButton.setHorizontalAlignment(JButton.CENTER);
 		pathItemButton.addActionListener(new PathPanelItemListener(category.getPath(), panel_path, pathItemButton, this));
+		pathItemButton.setMargin(symbolInsets);
 		panel_path.add(pathItemButton);
 		panel_path.revalidate();
 		panel_path.repaint();
@@ -312,6 +314,7 @@ public class AppWindow {
 			libraryItem.setVerticalAlignment(JButton.BOTTOM);
 			libraryItem.setHorizontalAlignment(JButton.CENTER);
 			libraryItem.addActionListener(new CategoryItemListener(item, this));
+			libraryItem.setMargin(symbolInsets);
 			panel_category.add(libraryItem);
 		}
 		panel_category.revalidate();
@@ -329,6 +332,7 @@ public class AppWindow {
 		libraryItem.setVerticalAlignment(JButton.BOTTOM);
 		libraryItem.setHorizontalAlignment(JButton.CENTER);
 		libraryItem.addActionListener(new SentenceItemListener(panel_sentence, libraryItem));
+		libraryItem.setMargin(symbolInsets);
 		panel_sentence.add(libraryItem);
 		panel_sentence.revalidate();
 		panel_sentence.repaint();
