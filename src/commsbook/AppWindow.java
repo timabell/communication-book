@@ -41,6 +41,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
+import javax.swing.BoxLayout;
 
 public class AppWindow {
 
@@ -150,7 +151,7 @@ public class AppWindow {
 		JPanel panel_container = new JPanel();
 		frame.getContentPane().add(panel_container, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_container = new GridBagLayout();
-		gbl_panel_container.columnWidths = new int[] { 100, 300 };
+		gbl_panel_container.columnWidths = new int[] { 120, 300 };
 		gbl_panel_container.rowHeights = new int[] { 10, 110, 10, 300 };
 		gbl_panel_container.columnWeights = new double[] { Double.MIN_VALUE, 1.0 };
 		gbl_panel_container.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0 };
@@ -233,7 +234,7 @@ public class AppWindow {
 		gbc_panel_path.gridx = 0;
 		gbc_panel_path.gridy = 3;
 		panel_container.add(panel_path, gbc_panel_path);
-		panel_path.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panel_path.setLayout(new BoxLayout(panel_path, BoxLayout.Y_AXIS));
 	}
 
 	protected void speakSentence(String sentence) {
