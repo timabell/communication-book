@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<installation version="1.0">
+    <info>
+        <appname>Communication Book</appname>
+        <appversion>0.4.1</appversion>
+        <authors>
+            <author email="tim@timwise.co.uk" name="Tim Abell"/>
+            <author email="" name="John Morton"/>
+        </authors>
+        <url>https://launchpad.net/communication</url>
+        <uninstaller name="Uninstaller.jar" write="yes"/>
+        <requiresjdk>no</requiresjdk>
+        <writeinstallationinformation>no</writeinstallationinformation>
+        <pack200/>
+        <run-privileged condition="izpack.windowsinstall.vista|izpack.windowsinstall.7"/>
+    </info>
+    <guiprefs height="480" resizable="no" width="640">
+        <modifier key="useFlags" value="yes"/>
+        <modifier key="langDisplayType" value="default"/>
+    </guiprefs>
+    <locale>
+        <langpack iso3="eng"/>
+    </locale>
+    <resources>
+        <res id="shortcutSpec.xml" src="izpack-config_shortcutSpec.xml"/>
+        <res id="Unix_shortcutSpec.xml" src="izpack-config_Unix_shortcutSpec.xml"/>
+    </resources>
+    <panels>
+        <panel classname="CheckedHelloPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="ShortcutPanel"/>
+        <panel classname="SimpleFinishPanel"/>
+    </panels>
+    <variables>
+        <variable name="DesktopShortcutCheckboxEnabled" value="true"/>
+    </variables>
+    <packs>
+        <pack name="program-pack" preselected="yes" required="yes">
+            <description/>
+            <file override="update"
+                src="/home/tim/projects/communication-book/code/dist/communication-book.jar" targetdir="$INSTALL_PATH/"/>
+        </pack>
+    </packs>
+    <native name="ShellLink.dll" type="izpack"/>
+    <native name="ShellLink_x64.dll" type="izpack"/>
+</installation>

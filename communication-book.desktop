@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Communication Book
+Exec=/usr/bin/communication-book
+Terminal=false
+Type=Application
+Categories=Application;Audio;Accessibility;Utility
+StartupNotify=true

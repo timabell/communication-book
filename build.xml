@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="communication book">
+	<property environment="env" />
+	<property name="ECLIPSE_HOME" value="../../../../../usr/lib/eclipse" />
+	<property name="debuglevel" value="source,lines,vars" />
+	<property name="target" value="1.6" />
+	<property name="source" value="1.6" />
+	<property name="version.num" value="0.5"/>
+	<path id="communication book.classpath">
+		<pathelement location="build/classes" />
+		<pathelement location="lib/freetts-1.2.2-bin/freetts-1.2/lib/freetts.jar" />
+	</path>
+	<target name="init">
+		<mkdir dir="build/classes" />
+		<copy includeemptydirs="false" todir="build/classes">
+			<fileset dir="src">
+				<exclude name="**/*.launch" />
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="clean">
+		<delete dir="build/classes" />
+		<delete dir="dist" />
+		<delete dir="package-tmp" />
+	</target>
+	<target depends="clean" name="cleanall" />
+	<target depends="build-subprojects,build-project" name="build" />
+	<target name="build-subprojects" />
+	<target depends="init" name="build-project">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" source="${source}" target="${target}" includeantruntime="false" >
+			<src path="src" />
+			<classpath refid="communication book.classpath" />
+		</javac>
+	</target>
+	<target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects" />
+	<target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+		<copy todir="${ant.library.dir}">
+			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar" />
+		</copy>
+		<unzip dest="${ant.library.dir}">
+			<patternset includes="jdtCompilerAdapter.jar" />
+			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar" />
+		</unzip>
+	</target>
+	<target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
+		<antcall target="build" />
+	</target>
+	<target name="run - open library">
+		<java classname="commsbook.AppWindow" failonerror="true" fork="yes">
+			<arg line="-library /home/tim/projects/communication-book/library/" />
+			<classpath refid="communication book.classpath" />
+		</java>
+	</target>
+	<target name="run - test voice">
+		<java classname="commsbook.AppWindow" failonerror="true" fork="yes">
+			<arg line="-t" />
+			<classpath refid="communication book.classpath" />
+		</java>
+	</target>
+	<target name="jar" depends="build">
+		<jar destfile="dist/communication-book.jar" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Main-Class" value="commsbook.AppWindow" />
+				<attribute name="Class-Path" value="/usr/share/java/freetts.jar freetts-1.2/lib/freetts.jar" />
+				<attribute name="Implementation-Version" value="${version.num}"/> 
+			</manifest>
+			<fileset dir="build/classes" />
+		</jar>
+	</target>
+	<target name="zip" depends="jar">
+		<zip destfile="dist/communication-book-${version.num}.zip" duplicate="fail" whenempty="fail">
+			<fileset dir="dist" includes="communication-book.jar"/>
+			<fileset dir="lib/freetts-1.2.2-bin/"/>
+			<fileset dir="." includes="copyright"/>
+			<fileset dir="." includes="GPL-3"/>
+			<fileset dir="." includes="README.txt"/>
+		</zip>
+	</target>
+	<target name="zip-bundle" depends="jar">
+		<zip destfile="dist/communication-book-${version.num}-bundle.zip" duplicate="fail" whenempty="fail">
+			<fileset dir="dist" includes="communication-book.jar"/>
+			<fileset dir="lib/freetts-1.2.2-bin/"/>
+			<fileset dir="." includes="copyright"/>
+			<fileset dir="." includes="GPL-3"/>
+			<fileset dir="." includes="README.txt"/>
+			<fileset dir="." includes="communication-book-bundle.bat"/>
+			<fileset dir="../">
+				<!-- 
+					Note ../Symbols is *not* in source control, and the latest official Symbol library
+					should be obtained and unzipped to this location before building the bundle
+					Todo: automate the download and unzip of the latest official symbol library process.
+				-->
+				<include name="Symbols/**/*"/>
+			</fileset>
+		</zip>
+	</target>
+	<target name="all" depends="zip-bundle,zip">
+	</target>
+	<target name="rebuild-all" depends="cleanall,zip-bundle,zip">
+	</target>
+</project>

@@ -1,0 +1,10 @@
+Package: communication-book
+Version: 0.5
+Section: sound
+Priority: optional
+Installed-Size: 73
+Architecture: all
+Depends: freetts, sun-java6-jre
+Maintainer: Tim Abell <tim@timwise.co.uk>
+Description: Communication aid for people with aphasia.
+ For more information see https://launchpad.net/communication

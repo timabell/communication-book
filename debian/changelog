@@ -1,0 +1,19 @@
+communication-book 0.5
+
+* Better display of categories.
+  Sort order.
+  Null ref bug fixed for empty folders.
+ -- Tim Abell <tim@timwise.co.uk> Fri, 04 May 2012 01:51:35 +0000
+
+communication-book 0.4
+
+* Correction to package description.
+  Version bump to differentiate from pre-speech v0.3
+ -- Tim Abell <tim@timwise.co.uk> Sunday, 18 Mar 2012 21:13:28 +0000
+
+
+communication-book 0.3
+
+* First debian packaged release
+  Basic speech working.
+ -- Tim Abell <tim@timwise.co.uk> Sunday, 18 Mar 2012 21:13:28 +0000

@@ -1,0 +1,35 @@
+Communication Book, an electronic communication aid.
+Copyright (C) 2012 Tim Abell <tim@timwise.co.uk>, John Morton
+
+========
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+---------
+
+For the full licence refer to file "GPL-3". On debian based systems
+this is located at "/usr/share/common-licenses/GPL-3".
+
+=========
+
+The JCommander library is included in this project in source form
+and is re-licensed under the GPL-3 as allowed by its original Apache v2.0
+license. See http://www.apache.org/licenses/GPL-compatibility.html and 
+src/com/beust/license.txt 
+
+=========
+
+Packaging:
+	Copyright (C) 2012 Tim Abell <tim@timwise.co.uk>
+	released under GPL-3

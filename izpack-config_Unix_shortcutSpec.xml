@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<shortcuts>
+    <skipIfNotSupported/>
+    <programGroup defaultName="Communication Book" location="applications"/>
+    <shortcut KdeUsername="root" applications="no" desktop="no"
+        encoding="UTF-8" initialState="normal" name="Communication Book"
+        programGroup="yes" startMenu="no" startup="no"
+        target="$INSTALL_PATH/communication-book.jar" type="Application"/>
+</shortcuts>

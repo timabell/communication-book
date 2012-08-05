@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/lib/jvm/java-6-sun/bin/java -jar /usr/share/communication-book/communication-book.jar
