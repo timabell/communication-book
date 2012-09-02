@@ -30,12 +30,10 @@ import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 import javax.swing.border.BevelBorder;
 
-import ui.MainWindow;
-
-
 import commsbook.model.Category;
 import commsbook.model.CategoryItem;
 import commsbook.model.Symbol;
+import commsbook.ui.Speech;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
@@ -56,50 +54,18 @@ public class AppWindow {
 	private JPanel panel_path;
 	private final Insets symbolInsets = new Insets(1, 2, 1, 2);
 	
-	@Parameter(names={"-library", "-l"}, description="path to library to open")
-	private String libraryPathArg;
 	
-	@Parameter(names={"-test", "-t"}, description="test voice output")
-	private boolean testRun;
-	
-	private JCommander args;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(final String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					//JFrame window = new MainWindow();
-					//window.setVisible(true);
-					new AppWindow(args);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 * @param args 
 	 */
 	public AppWindow(String[] args) {
-		this.args = new JCommander(this, args);
-		if (testRun){
-			speakSentence("Testing voice output. It's working!");
-			return;
-		}
 		initialize();
 		// set up the library selection dialog
 		libraryFolderChooser
 				.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		libraryFolderChooser.setDialogTitle("Select a library folder");
-		if (libraryPathArg != null){
-			File path = new File(libraryPathArg);
-			loadCategory(path);
-		}
 		// maximise the window - ref http://stackoverflow.com/a/5207711/10245
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		//show
@@ -175,7 +141,7 @@ public class AppWindow {
 						for (Component component : components){
 							sentence = sentence + ((JButton)component).getText() + " ";
 						}
-						speakSentence(sentence);
+						Speech.speakSentence(sentence);
 					}
 				});
 				GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -236,25 +202,6 @@ public class AppWindow {
 		gbc_panel_path.gridy = 3;
 		panel_container.add(panel_path, gbc_panel_path);
 		panel_path.setLayout(new BoxLayout(panel_path, BoxLayout.Y_AXIS));
-	}
-
-	protected void speakSentence(String sentence) {
-		// TODO Auto-generated method stub
-		Voice voice = VoiceManager.getInstance().getVoice("kevin16");
-		if (voice == null) {
-			System.err.println("Voice error. Couldn't load voice kevin16.");
-			System.exit(1);
-		}
-		voice.allocate();
-		voice.speak(sentence);
-		voice.deallocate();
-	}
-
-	public void loadCategory(File folder) {
-		// todo: background loading, and statusbar update
-		Category category = Category.load(folder);
-		addCategoryToPathPanel(category);
-		showCategory(category);
 	}
 
 	private void addCategoryToPathPanel(Category category) {
@@ -346,7 +293,7 @@ public class AppWindow {
 		panel_path.removeAll();
 		panel_path.revalidate();
 		panel_path.repaint();
-		loadCategory(libraryFolder);
+		//loadCategory(libraryFolder);
 	}
 }
 
@@ -362,7 +309,7 @@ class CategoryItemListener implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		if (item.getIsCategory()) {
 			// load another category
-			view.loadCategory(new File(((Category) item).getPath()));
+			//view.loadCategory(new File(((Category) item).getPath()));
 		} else {
 			view.addToSentence((Symbol)item);
 		}
@@ -413,7 +360,7 @@ class PathPanelItemListener implements ActionListener {
 		container.revalidate();
 		container.repaint();
 		//load the selected category
-		view.loadCategory(new File(path));
+		//view.loadCategory(new File(path));
 	}
 }
 

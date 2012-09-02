@@ -1,4 +1,4 @@
-package ui;
+package commsbook.ui;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -27,27 +27,4 @@ public class MainWindow extends JFrame {
 			System.err.println("Cannot install " + PREFERRED_LOOK_AND_FEEL + " on this platform:" + e.getMessage());
 		}
 	}
-
-	/**
-	 * Main entry of the class.
-	 * Note: This class is only created so that you can easily preview the result at runtime.
-	 * It is not expected to be managed by the designer.
-	 * You can modify it as you like.
-	 */
-	public static void main(String[] args) {
-		installLnF();
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				MainWindow frame = new MainWindow();
-				frame.setDefaultCloseOperation(MainWindow.EXIT_ON_CLOSE);
-				frame.setTitle("MainWindow");
-				frame.getContentPane().setPreferredSize(frame.getSize());
-				frame.pack();
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
-			}
-		});
-	}
-
 }
