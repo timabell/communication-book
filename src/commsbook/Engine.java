@@ -2,6 +2,7 @@ package commsbook;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.EventObject;
 import java.util.List;
 
 import commsbook.model.*;
@@ -15,6 +16,8 @@ public class Engine {
 	private File libraryFolder;
 	private List<Symbol> sentence = new ArrayList<Symbol>();
 	private Category selectedCategory;
+	private StateChangeListener sentenceListener;
+	private StateChangeListener categoryListener;
 	
 	public Engine(){
 		initialiseState();
@@ -39,8 +42,8 @@ public class Engine {
 		// TODO update display with new location in library (i.e. the breadcrumb trail navigation)
 		//addCategoryToPathPanel(category);
 		
-		// TODO update the list of symbols with this category
-		//showCategory(category);
+		// update the list of symbols with this category
+		categoryListener.stateChanged();
 	}
 
 	public List<Symbol> getSentence(){
@@ -49,7 +52,9 @@ public class Engine {
 	
 	public void addToSentence(Symbol sybmol){
 		sentence.add(sybmol);
-		// TODO: trigger update of sentence display
+
+		// trigger update of sentence display
+		sentenceListener.stateChanged();
 	}
 	
 	public List<CategoryItem> getCurrentCategoryItems(){
@@ -58,4 +63,17 @@ public class Engine {
 		}
 		return selectedCategory.getSymbols();
 	}
+	
+	public void setSentenceListener(StateChangeListener sentenceListener) {
+		this.sentenceListener = sentenceListener;
+	}
+
+	public void setCategoryListener(StateChangeListener categoryListener) {
+		this.categoryListener = categoryListener;
+	}
+
+	public interface StateChangeListener{
+		public void stateChanged();
+	}
+
 }

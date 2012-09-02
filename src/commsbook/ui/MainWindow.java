@@ -13,6 +13,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -28,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.BevelBorder;
 
+import commsbook.Engine;
 import commsbook.model.*;
 
 public class MainWindow {
@@ -44,10 +46,14 @@ public class MainWindow {
 	private JPanel panel_path;
 	private final Insets symbolInsets = new Insets(1, 2, 1, 2);
 
+	private final Engine engine;
+
 	/**
 	 * Create the application.
+	 * @param engine 
 	 */
-	public MainWindow() {
+	public MainWindow(Engine engine) {
+		this.engine = engine;
 		initialize();
 
 		// set up the library selection dialog
@@ -218,14 +224,14 @@ public class MainWindow {
 		panel_path.repaint();
 	}
 
-	private void showCategory(Category category) {
+	private void showCategory(List<CategoryItem> items) {
 		ImageIcon icon;
 		String name;
 		String iconPath;
 		panel_category.removeAll(); // clear the existing category
 		// display (or initial prompt)
 		// load the images into the visual library
-		for (CategoryItem item : category.getSymbols()) {
+		for (CategoryItem item : items) {
 			name = item.getName();
 			iconPath = item.getIconPath();
 			if (iconPath == null) {
@@ -256,7 +262,7 @@ public class MainWindow {
 		panel_category.repaint();
 	}
 	
-	public void addToSentence(Symbol symbol){
+	private JButton createSentenceButton(Symbol symbol){
 		ImageIcon icon = new ImageIcon(symbol.getIconPath(), symbol.getName());
 		JButton libraryItem = new JButton(icon);
 		libraryItem.setText(symbol.getName());
@@ -268,9 +274,7 @@ public class MainWindow {
 		libraryItem.setHorizontalAlignment(JButton.CENTER);
 		libraryItem.addActionListener(new SentenceItemListener(panel_sentence, libraryItem));
 		libraryItem.setMargin(symbolInsets);
-		panel_sentence.add(libraryItem);
-		panel_sentence.revalidate();
-		panel_sentence.repaint();
+		return libraryItem;
 	}
 
 	public void loadLibrary() {
@@ -282,6 +286,19 @@ public class MainWindow {
 		panel_path.revalidate();
 		panel_path.repaint();
 		//loadCategory(libraryFolder);
+	}
+
+	public void repaintSentence() {
+		panel_sentence.removeAll();
+		for (Symbol symbol : engine.getSentence()) {
+			panel_sentence.add(createSentenceButton(symbol));
+		}
+		panel_sentence.revalidate();
+		panel_sentence.repaint();
+	}
+
+	public void repaintCategory() {
+		showCategory(engine.getCurrentCategoryItems());
 	}
 }
 
@@ -299,7 +316,8 @@ class CategoryItemListener implements ActionListener {
 			// load another category
 			//view.loadCategory(new File(((Category) item).getPath()));
 		} else {
-			view.addToSentence((Symbol)item);
+			// TODO: add to sentence in engine 
+			//view.addToSentence((Symbol)item);
 		}
 	}
 }
