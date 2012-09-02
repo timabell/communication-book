@@ -37,14 +37,28 @@ public class Engine {
 		//TODO: fire event to reload whole UI
 	}
 
-	public void loadCategory(File folder) {
-		selectedCategory = Category.load(folder);
-		
-		// TODO update display with new location in library (i.e. the breadcrumb trail navigation)
-		//addCategoryToPathPanel(category);
+	public void loadCategory(Category category) {
+		selectedCategory = category;
+
+		// update path with new location in library (i.e. the breadcrumb trail navigation)
+		if (categoryPath.contains(category)){
+			// remove everything after selected category (starting at the end first)
+			for (int i = categoryPath.size() - 1; i >= 0; i--){
+				if (categoryPath.get(i) == category){
+					break;
+				}
+				categoryPath.remove(i);
+			}
+		} else {
+			categoryPath.add(selectedCategory);
+		}
 		
 		// update the list of symbols with this category
 		categoryListener.stateChanged();
+	}
+
+	public void loadCategory(File folder) {
+		loadCategory(Category.load(folder));
 	}
 
 	public List<Symbol> getSentence(){
@@ -80,5 +94,4 @@ public class Engine {
 	public interface StateChangeListener{
 		public void stateChanged();
 	}
-
 }

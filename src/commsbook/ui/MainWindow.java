@@ -199,6 +199,7 @@ public class MainWindow {
 	}
 
 	private void repaintPathPanel() {
+		panel_path.removeAll();
 		for (Category category : engine.getCategoryPath()) {
 			ImageIcon icon;
 			String name = category.getName();
@@ -218,7 +219,7 @@ public class MainWindow {
 			pathItemButton.setHorizontalTextPosition(JButton.CENTER);
 			pathItemButton.setVerticalAlignment(JButton.BOTTOM);
 			pathItemButton.setHorizontalAlignment(JButton.CENTER);
-			pathItemButton.addActionListener(new PathPanelItemListener(category.getPath(), panel_path, pathItemButton, this));
+			pathItemButton.addActionListener(new PathPanelItemListener(category, engine));
 			pathItemButton.setMargin(symbolInsets);
 			panel_path.add(pathItemButton);
 		}
@@ -338,33 +339,16 @@ class SentenceItemListener implements ActionListener {
 }
 
 class PathPanelItemListener implements ActionListener {
-	private final String path;
-	private final MainWindow view;
-	private JPanel container;
-	private JButton button;
+	private final Category category;
+	private final Engine engine;
 
-	PathPanelItemListener(String path, JPanel container, JButton button, MainWindow view) {
-		this.path = path;
-		this.container = container;
-		this.button = button;
-		this.view = view;
+	PathPanelItemListener(Category category, Engine engine) {
+		this.category = category;
+		this.engine = engine;
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		//remove all subsequent buttons
-		boolean past = false;
-		for (Component component : container.getComponents()){
-			if (past) {
-				container.remove(component);
-			} else if (component==button){
-				container.remove(component); // clicked button re-added by load routine. 
-				past = true;
-			}
-		}
-		container.revalidate();
-		container.repaint();
-		//load the selected category
-		//view.loadCategory(new File(path));
+		engine.loadCategory(category);
 	}
 }
 
