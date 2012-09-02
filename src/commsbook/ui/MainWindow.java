@@ -254,7 +254,7 @@ public class MainWindow {
 			libraryItem.setHorizontalTextPosition(JButton.CENTER);
 			libraryItem.setVerticalAlignment(JButton.BOTTOM);
 			libraryItem.setHorizontalAlignment(JButton.CENTER);
-			libraryItem.addActionListener(new CategoryItemListener(item, this));
+			libraryItem.addActionListener(new CategoryItemListener(item, engine));
 			libraryItem.setMargin(symbolInsets);
 			panel_category.add(libraryItem);
 		}
@@ -304,20 +304,19 @@ public class MainWindow {
 
 class CategoryItemListener implements ActionListener {
 	private final CategoryItem item;
-	private final MainWindow view;
+	private final Engine engine;
 
-	CategoryItemListener(CategoryItem item, MainWindow view) {
+	CategoryItemListener(CategoryItem item, Engine engine) {
 		this.item = item;
-		this.view = view;
+		this.engine = engine;
 	}
 
 	public void actionPerformed(ActionEvent ae) {
 		if (item.getIsCategory()) {
 			// load another category
-			//view.loadCategory(new File(((Category) item).getPath()));
+			engine.loadCategory(new File(((Category) item).getPath()));
 		} else {
-			// TODO: add to sentence in engine 
-			//view.addToSentence((Symbol)item);
+			engine.addToSentence((Symbol)item);
 		}
 	}
 }
