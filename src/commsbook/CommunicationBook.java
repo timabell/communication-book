@@ -3,8 +3,6 @@ package commsbook;
 import java.awt.EventQueue;
 import java.io.File;
 
-import javax.swing.JFrame;
-
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 

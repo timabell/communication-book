@@ -3,7 +3,6 @@ package commsbook.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -46,22 +45,6 @@ public class MainWindow {
 	private final Insets symbolInsets = new Insets(1, 2, 1, 2);
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainWindow window = new MainWindow();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public MainWindow() {
@@ -73,6 +56,8 @@ public class MainWindow {
 		libraryFolderChooser.setDialogTitle("Select a library folder");
 		// maximise the window - ref http://stackoverflow.com/a/5207711/10245
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+
+		frame.setVisible(true);
 	}
 
 	/**
@@ -144,7 +129,7 @@ public class MainWindow {
 						for (Component component : components){
 							sentence = sentence + ((JButton)component).getText() + " ";
 						}
-						Speech.speakSentence(sentence);
+						// Speech.speakSentence(sentence); // TODO: trigger speech
 					}
 				});
 				GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
