@@ -16,6 +16,7 @@ public class Engine {
 	private File libraryFolder;
 	private List<Symbol> sentence = new ArrayList<Symbol>();
 	private Category selectedCategory;
+	private List<Category> categoryPath = new ArrayList();
 	private StateChangeListener sentenceListener;
 	private StateChangeListener categoryListener;
 	
@@ -70,6 +71,10 @@ public class Engine {
 
 	public void setCategoryListener(StateChangeListener categoryListener) {
 		this.categoryListener = categoryListener;
+	}
+
+	public List<Category> getCategoryPath() {
+		return categoryPath;
 	}
 
 	public interface StateChangeListener{

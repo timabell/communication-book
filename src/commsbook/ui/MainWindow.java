@@ -198,40 +198,42 @@ public class MainWindow {
 		panel_path.setLayout(new BoxLayout(panel_path, BoxLayout.Y_AXIS));
 	}
 
-	private void addCategoryToPathPanel(Category category) {
-		ImageIcon icon;
-		String name = category.getName();
-		String iconPath = category.getIconPath();
-		if (iconPath == null) {
-			URL resource = getClass().getResource(
-					"/commsbook/resources/folder.png");
-			icon = new ImageIcon(resource, name);
-		} else {
-			icon = new ImageIcon(iconPath, name);
+	private void repaintPathPanel() {
+		for (Category category : engine.getCategoryPath()) {
+			ImageIcon icon;
+			String name = category.getName();
+			String iconPath = category.getIconPath();
+			if (iconPath == null) {
+				URL resource = getClass().getResource(
+						"/commsbook/resources/folder.png");
+				icon = new ImageIcon(resource, name);
+			} else {
+				icon = new ImageIcon(iconPath, name);
+			}
+			JButton pathItemButton = new JButton(icon);
+			pathItemButton.setText(name);
+			pathItemButton.setBackground(Color.WHITE); // TODO: doesn't seem to
+													// work in ubuntu. hrmm.
+			pathItemButton.setVerticalTextPosition(JButton.BOTTOM);
+			pathItemButton.setHorizontalTextPosition(JButton.CENTER);
+			pathItemButton.setVerticalAlignment(JButton.BOTTOM);
+			pathItemButton.setHorizontalAlignment(JButton.CENTER);
+			pathItemButton.addActionListener(new PathPanelItemListener(category.getPath(), panel_path, pathItemButton, this));
+			pathItemButton.setMargin(symbolInsets);
+			panel_path.add(pathItemButton);
 		}
-		JButton pathItemButton = new JButton(icon);
-		pathItemButton.setText(name);
-		pathItemButton.setBackground(Color.WHITE); // TODO: doesn't seem to
-												// work in ubuntu. hrmm.
-		pathItemButton.setVerticalTextPosition(JButton.BOTTOM);
-		pathItemButton.setHorizontalTextPosition(JButton.CENTER);
-		pathItemButton.setVerticalAlignment(JButton.BOTTOM);
-		pathItemButton.setHorizontalAlignment(JButton.CENTER);
-		pathItemButton.addActionListener(new PathPanelItemListener(category.getPath(), panel_path, pathItemButton, this));
-		pathItemButton.setMargin(symbolInsets);
-		panel_path.add(pathItemButton);
 		panel_path.revalidate();
 		panel_path.repaint();
 	}
 
-	private void showCategory(List<CategoryItem> items) {
+	public void repaintCategory() {
 		ImageIcon icon;
 		String name;
 		String iconPath;
 		panel_category.removeAll(); // clear the existing category
 		// display (or initial prompt)
 		// load the images into the visual library
-		for (CategoryItem item : items) {
+		for (CategoryItem item : engine.getCurrentCategoryItems()) {
 			name = item.getName();
 			iconPath = item.getIconPath();
 			if (iconPath == null) {
@@ -260,6 +262,7 @@ public class MainWindow {
 		}
 		panel_category.revalidate();
 		panel_category.repaint();
+		repaintPathPanel();
 	}
 	
 	private JButton createSentenceButton(Symbol symbol){
@@ -282,10 +285,10 @@ public class MainWindow {
 			return;
 		}
 		File libraryFolder = libraryFolderChooser.getSelectedFile();
+		engine.loadLibrary(libraryFolder);
 		panel_path.removeAll();
 		panel_path.revalidate();
 		panel_path.repaint();
-		//loadCategory(libraryFolder);
 	}
 
 	public void repaintSentence() {
@@ -295,10 +298,6 @@ public class MainWindow {
 		}
 		panel_sentence.revalidate();
 		panel_sentence.repaint();
-	}
-
-	public void repaintCategory() {
-		showCategory(engine.getCurrentCategoryItems());
 	}
 }
 
