@@ -322,19 +322,17 @@ class CategoryItemListener implements ActionListener {
 }
 
 class SentenceItemListener implements ActionListener {
-	private final JButton button;
-	private JPanel container;
+	private final Symbol symbol;
+	private final Engine engine;
 
-	SentenceItemListener(JPanel container, JButton button) {
-		this.container = container;
-		this.button = button;
+	SentenceItemListener(Symbol symbol, Engine engine) {
+		this.symbol = symbol;
+		this.engine = engine;
 	}
 
 	public void actionPerformed(ActionEvent ae) {
 		// remove from sentence
-		container.remove(button);
-		container.revalidate();
-		container.repaint();
+		engine.removeFromSentence(symbol);
 	}
 }
 

@@ -71,7 +71,14 @@ public class Engine {
 		// trigger update of sentence display
 		sentenceListener.stateChanged();
 	}
-	
+
+	public void removeFromSentence(Symbol symbol) {
+		sentence.remove(symbol);
+
+		// trigger update of sentence display
+		sentenceListener.stateChanged();
+	}
+
 	public List<CategoryItem> getCurrentCategoryItems(){
 		if (selectedCategory == null){
 			return new ArrayList<CategoryItem>();
