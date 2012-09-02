@@ -33,13 +33,13 @@ public class CommunicationBook implements Runnable {
 				Speech.speakSentence("Testing voice output. It's working!");
 				return;
 			}
+			MainWindow window = new MainWindow();
 			Engine engine = new Engine();
 			if (libraryPathArg != null) {
 				File path = new File(libraryPathArg);
 				engine.loadCategory(path);
 			}
 			// TODO: connect UI to Engine & Speech
-			MainWindow window = new MainWindow();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
