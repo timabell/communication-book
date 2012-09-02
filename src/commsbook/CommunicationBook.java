@@ -41,8 +41,7 @@ public class CommunicationBook implements Runnable {
 				engine.loadCategory(path);
 			}
 			// TODO: connect UI to Engine & Speech
-			JFrame window = new MainWindow();
-			window.setVisible(true);
+			MainWindow window = new MainWindow();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
