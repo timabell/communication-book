@@ -135,7 +135,7 @@ public class MainWindow {
 						for (Component component : components){
 							sentence = sentence + ((JButton)component).getText() + " ";
 						}
-						// Speech.speakSentence(sentence); // TODO: trigger speech
+						Speech.speakSentence(sentence);
 					}
 				});
 				GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
