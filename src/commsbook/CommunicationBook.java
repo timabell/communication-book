@@ -49,7 +49,7 @@ public class CommunicationBook implements Runnable {
 			// Load the library specified in the command line if any
 			if (libraryPathArg != null) {
 				File path = new File(libraryPathArg);
-				engine.loadCategory(path);
+				engine.loadLibrary(path);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

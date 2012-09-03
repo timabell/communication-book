@@ -26,13 +26,14 @@ public class Engine {
 
 		// load the new library's top level category for display
 		libraryFolder = folder;
-		loadCategory(folder);
-		
+		selectedCategory = Category.load(folder);
+		categoryPath.add(selectedCategory);
+
 		// fire events to reload whole UI
 		categoryListener.stateChanged();
 	}
 
-	public void loadCategory(Category category) {
+	public void switchCategory(Category category) {
 		selectedCategory = category;
 
 		// update path with new location in library (i.e. the breadcrumb trail navigation)
@@ -47,13 +48,11 @@ public class Engine {
 		} else {
 			categoryPath.add(selectedCategory);
 		}
-		
+
+		category.loadContents();
+
 		// update the list of symbols with this category
 		categoryListener.stateChanged();
-	}
-
-	public void loadCategory(File folder) {
-		loadCategory(Category.load(folder));
 	}
 
 	public List<Symbol> getSentence(){

@@ -313,7 +313,7 @@ class CategoryItemListener implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		if (item.getIsCategory()) {
 			// load another category
-			engine.loadCategory(new File(((Category) item).getPath()));
+			engine.switchCategory((Category) item);
 		} else {
 			engine.addToSentence((Symbol)item);
 		}
@@ -345,7 +345,7 @@ class PathPanelItemListener implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		engine.loadCategory(category);
+		engine.switchCategory(category);
 	}
 }
 
