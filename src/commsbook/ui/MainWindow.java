@@ -1,9 +1,8 @@
-package commsbook;
+package commsbook.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,8 +13,10 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -25,27 +26,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.KeyStroke;
-import javax.swing.border.Border;
 import javax.swing.border.BevelBorder;
 
-import ui.MainWindow;
+import commsbook.Engine;
+import commsbook.model.*;
 
-
-import commsbook.model.Category;
-import commsbook.model.CategoryItem;
-import commsbook.model.Symbol;
-
-import com.beust.jcommander.JCommander;
-import com.beust.jcommander.Parameter;
-import com.sun.speech.freetts.Voice;
-import com.sun.speech.freetts.VoiceManager;
-import javax.swing.BoxLayout;
-
-public class AppWindow {
+public class MainWindow {
 
 	private JFrame frame;
+
 	// I know JFileChooser looks crap, but we need folder selection.
 	// Kick Sun's Oracle 0wned arse if you want this to get better
 	// http://bugs.sun.com/view_bug.do?bug_id=6192906
@@ -55,54 +45,24 @@ public class AppWindow {
 	private JPanel panel_sentence;
 	private JPanel panel_path;
 	private final Insets symbolInsets = new Insets(1, 2, 1, 2);
-	
-	@Parameter(names={"-library", "-l"}, description="path to library to open")
-	private String libraryPathArg;
-	
-	@Parameter(names={"-test", "-t"}, description="test voice output")
-	private boolean testRun;
-	
-	private JCommander args;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(final String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					//JFrame window = new MainWindow();
-					//window.setVisible(true);
-					new AppWindow(args);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private final Engine engine;
 
 	/**
 	 * Create the application.
-	 * @param args 
+	 * @param engine 
 	 */
-	public AppWindow(String[] args) {
-		this.args = new JCommander(this, args);
-		if (testRun){
-			speakSentence("Testing voice output. It's working!");
-			return;
-		}
+	public MainWindow(Engine engine) {
+		this.engine = engine;
 		initialize();
+
 		// set up the library selection dialog
 		libraryFolderChooser
 				.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		libraryFolderChooser.setDialogTitle("Select a library folder");
-		if (libraryPathArg != null){
-			File path = new File(libraryPathArg);
-			loadCategory(path);
-		}
 		// maximise the window - ref http://stackoverflow.com/a/5207711/10245
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		//show
+
 		frame.setVisible(true);
 	}
 
@@ -111,7 +71,6 @@ public class AppWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-
 		frame.setBounds(100, 100, 623, 464);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Communication Book");
@@ -175,7 +134,7 @@ public class AppWindow {
 						for (Component component : components){
 							sentence = sentence + ((JButton)component).getText() + " ";
 						}
-						speakSentence(sentence);
+						Speech.speakSentence(sentence);
 					}
 				});
 				GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -238,59 +197,43 @@ public class AppWindow {
 		panel_path.setLayout(new BoxLayout(panel_path, BoxLayout.Y_AXIS));
 	}
 
-	protected void speakSentence(String sentence) {
-		// TODO Auto-generated method stub
-		Voice voice = VoiceManager.getInstance().getVoice("kevin16");
-		if (voice == null) {
-			System.err.println("Voice error. Couldn't load voice kevin16.");
-			System.exit(1);
+	private void repaintPathPanel() {
+		panel_path.removeAll();
+		for (Category category : engine.getCategoryPath()) {
+			ImageIcon icon;
+			String name = category.getName();
+			String iconPath = category.getIconPath();
+			if (iconPath == null) {
+				URL resource = getClass().getResource(
+						"/commsbook/resources/folder.png");
+				icon = new ImageIcon(resource, name);
+			} else {
+				icon = new ImageIcon(iconPath, name);
+			}
+			JButton pathItemButton = new JButton(icon);
+			pathItemButton.setText(name);
+			pathItemButton.setBackground(Color.WHITE); // TODO: doesn't seem to
+													// work in ubuntu. hrmm.
+			pathItemButton.setVerticalTextPosition(JButton.BOTTOM);
+			pathItemButton.setHorizontalTextPosition(JButton.CENTER);
+			pathItemButton.setVerticalAlignment(JButton.BOTTOM);
+			pathItemButton.setHorizontalAlignment(JButton.CENTER);
+			pathItemButton.addActionListener(new PathPanelItemListener(category, engine));
+			pathItemButton.setMargin(symbolInsets);
+			panel_path.add(pathItemButton);
 		}
-		voice.allocate();
-		voice.speak(sentence);
-		voice.deallocate();
-	}
-
-	public void loadCategory(File folder) {
-		// todo: background loading, and statusbar update
-		Category category = Category.load(folder);
-		addCategoryToPathPanel(category);
-		showCategory(category);
-	}
-
-	private void addCategoryToPathPanel(Category category) {
-		ImageIcon icon;
-		String name = category.getName();
-		String iconPath = category.getIconPath();
-		if (iconPath == null) {
-			URL resource = getClass().getResource(
-					"/commsbook/resources/folder.png");
-			icon = new ImageIcon(resource, name);
-		} else {
-			icon = new ImageIcon(iconPath, name);
-		}
-		JButton pathItemButton = new JButton(icon);
-		pathItemButton.setText(name);
-		pathItemButton.setBackground(Color.WHITE); // TODO: doesn't seem to
-												// work in ubuntu. hrmm.
-		pathItemButton.setVerticalTextPosition(JButton.BOTTOM);
-		pathItemButton.setHorizontalTextPosition(JButton.CENTER);
-		pathItemButton.setVerticalAlignment(JButton.BOTTOM);
-		pathItemButton.setHorizontalAlignment(JButton.CENTER);
-		pathItemButton.addActionListener(new PathPanelItemListener(category.getPath(), panel_path, pathItemButton, this));
-		pathItemButton.setMargin(symbolInsets);
-		panel_path.add(pathItemButton);
 		panel_path.revalidate();
 		panel_path.repaint();
 	}
 
-	private void showCategory(Category category) {
+	public void repaintCategory() {
 		ImageIcon icon;
 		String name;
 		String iconPath;
 		panel_category.removeAll(); // clear the existing category
 		// display (or initial prompt)
 		// load the images into the visual library
-		for (CategoryItem item : category.getSymbols()) {
+		for (CategoryItem item : engine.getCurrentCategoryItems()) {
 			name = item.getName();
 			iconPath = item.getIconPath();
 			if (iconPath == null) {
@@ -313,15 +256,16 @@ public class AppWindow {
 			libraryItem.setHorizontalTextPosition(JButton.CENTER);
 			libraryItem.setVerticalAlignment(JButton.BOTTOM);
 			libraryItem.setHorizontalAlignment(JButton.CENTER);
-			libraryItem.addActionListener(new CategoryItemListener(item, this));
+			libraryItem.addActionListener(new CategoryItemListener(item, engine));
 			libraryItem.setMargin(symbolInsets);
 			panel_category.add(libraryItem);
 		}
 		panel_category.revalidate();
 		panel_category.repaint();
+		repaintPathPanel();
 	}
 	
-	public void addToSentence(Symbol symbol){
+	private JButton createSentenceButton(Symbol symbol){
 		ImageIcon icon = new ImageIcon(symbol.getIconPath(), symbol.getName());
 		JButton libraryItem = new JButton(icon);
 		libraryItem.setText(symbol.getName());
@@ -331,11 +275,9 @@ public class AppWindow {
 		libraryItem.setHorizontalTextPosition(JButton.CENTER);
 		libraryItem.setVerticalAlignment(JButton.BOTTOM);
 		libraryItem.setHorizontalAlignment(JButton.CENTER);
-		libraryItem.addActionListener(new SentenceItemListener(panel_sentence, libraryItem));
+		libraryItem.addActionListener(new SentenceItemListener(symbol, engine));
 		libraryItem.setMargin(symbolInsets);
-		panel_sentence.add(libraryItem);
-		panel_sentence.revalidate();
-		panel_sentence.repaint();
+		return libraryItem;
 	}
 
 	public void loadLibrary() {
@@ -343,77 +285,64 @@ public class AppWindow {
 			return;
 		}
 		File libraryFolder = libraryFolderChooser.getSelectedFile();
-		panel_path.removeAll();
-		panel_path.revalidate();
-		panel_path.repaint();
-		loadCategory(libraryFolder);
+		engine.loadLibrary(libraryFolder);
+	}
+
+	public void repaintSentence() {
+		panel_sentence.removeAll();
+		for (Symbol symbol : engine.getSentence()) {
+			panel_sentence.add(createSentenceButton(symbol));
+		}
+		panel_sentence.revalidate();
+		panel_sentence.repaint();
 	}
 }
 
 class CategoryItemListener implements ActionListener {
 	private final CategoryItem item;
-	private final AppWindow view;
+	private final Engine engine;
 
-	CategoryItemListener(CategoryItem item, AppWindow view) {
+	CategoryItemListener(CategoryItem item, Engine engine) {
 		this.item = item;
-		this.view = view;
+		this.engine = engine;
 	}
 
 	public void actionPerformed(ActionEvent ae) {
 		if (item.getIsCategory()) {
 			// load another category
-			view.loadCategory(new File(((Category) item).getPath()));
+			engine.switchCategory((Category) item);
 		} else {
-			view.addToSentence((Symbol)item);
+			engine.addToSentence((Symbol)item);
 		}
 	}
 }
 
 class SentenceItemListener implements ActionListener {
-	private final JButton button;
-	private JPanel container;
+	private final Symbol symbol;
+	private final Engine engine;
 
-	SentenceItemListener(JPanel container, JButton button) {
-		this.container = container;
-		this.button = button;
+	SentenceItemListener(Symbol symbol, Engine engine) {
+		this.symbol = symbol;
+		this.engine = engine;
 	}
 
 	public void actionPerformed(ActionEvent ae) {
 		// remove from sentence
-		container.remove(button);
-		container.revalidate();
-		container.repaint();
+		engine.removeFromSentence(symbol);
 	}
 }
 
 class PathPanelItemListener implements ActionListener {
-	private final String path;
-	private final AppWindow view;
-	private JPanel container;
-	private JButton button;
+	private final Category category;
+	private final Engine engine;
 
-	PathPanelItemListener(String path, JPanel container, JButton button, AppWindow view) {
-		this.path = path;
-		this.container = container;
-		this.button = button;
-		this.view = view;
+	PathPanelItemListener(Category category, Engine engine) {
+		this.category = category;
+		this.engine = engine;
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		//remove all subsequent buttons
-		boolean past = false;
-		for (Component component : container.getComponents()){
-			if (past) {
-				container.remove(component);
-			} else if (component==button){
-				container.remove(component); // clicked button re-added by load routine. 
-				past = true;
-			}
-		}
-		container.revalidate();
-		container.repaint();
-		//load the selected category
-		view.loadCategory(new File(path));
+		engine.switchCategory(category);
 	}
 }
 
