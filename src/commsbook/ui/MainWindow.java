@@ -276,7 +276,7 @@ public class MainWindow {
 		libraryItem.setHorizontalTextPosition(JButton.CENTER);
 		libraryItem.setVerticalAlignment(JButton.BOTTOM);
 		libraryItem.setHorizontalAlignment(JButton.CENTER);
-		libraryItem.addActionListener(new SentenceItemListener(panel_sentence, libraryItem));
+		libraryItem.addActionListener(new SentenceItemListener(symbol, engine));
 		libraryItem.setMargin(symbolInsets);
 		return libraryItem;
 	}
