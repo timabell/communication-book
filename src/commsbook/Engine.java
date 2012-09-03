@@ -16,25 +16,20 @@ public class Engine {
 	private File libraryFolder;
 	private List<Symbol> sentence = new ArrayList<Symbol>();
 	private Category selectedCategory;
-	private List<Category> categoryPath = new ArrayList();
+	private List<Category> categoryPath = new ArrayList<Category>();
 	private StateChangeListener sentenceListener;
 	private StateChangeListener categoryListener;
 	
-	public Engine(){
-		initialiseState();
-	}
-	
-	private void initialiseState() {
-		sentence = new ArrayList<Symbol>();
-	}
-
 	public void loadLibrary(File folder){
-		this.libraryFolder = folder;
+		// clear path for previous library if any
+		categoryPath.clear();
 
-		// clear previous state
-		initialiseState();
+		// load the new library's top level category for display
+		libraryFolder = folder;
+		loadCategory(folder);
 		
-		//TODO: fire event to reload whole UI
+		// fire events to reload whole UI
+		categoryListener.stateChanged();
 	}
 
 	public void loadCategory(Category category) {

@@ -84,8 +84,7 @@ public class MainWindow {
 		JMenuItem mntmLoadLibrary = new JMenuItem("Load Library...");
 		mntmLoadLibrary.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO: call back to engine to load library
-				// loadLibrary();
+				loadLibrary();
 			}
 		});
 		mntmLoadLibrary.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,
