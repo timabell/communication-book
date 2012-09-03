@@ -286,9 +286,6 @@ public class MainWindow {
 		}
 		File libraryFolder = libraryFolderChooser.getSelectedFile();
 		engine.loadLibrary(libraryFolder);
-		panel_path.removeAll();
-		panel_path.revalidate();
-		panel_path.repaint();
 	}
 
 	public void repaintSentence() {
