@@ -13,7 +13,6 @@ import commsbook.model.*;
  * The can be show
  */
 public class Engine {
-	private File libraryFolder;
 	private List<Symbol> sentence = new ArrayList<Symbol>();
 	private Category selectedCategory;
 	private List<Category> categoryPath = new ArrayList<Category>();
@@ -25,7 +24,6 @@ public class Engine {
 		categoryPath.clear();
 
 		// load the new library's top level category for display
-		libraryFolder = folder;
 		selectedCategory = Category.load(folder);
 		categoryPath.add(selectedCategory);
 
