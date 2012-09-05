@@ -32,6 +32,8 @@ import javax.swing.border.BevelBorder;
 import commsbook.Engine;
 import commsbook.model.*;
 
+import commsbook.ui.actionlisteners.*;
+
 public class MainWindow {
 
 	private JFrame frame;
@@ -295,54 +297,6 @@ public class MainWindow {
 		}
 		panel_sentence.revalidate();
 		panel_sentence.repaint();
-	}
-}
-
-class CategoryItemListener implements ActionListener {
-	private final CategoryItem item;
-	private final Engine engine;
-
-	CategoryItemListener(CategoryItem item, Engine engine) {
-		this.item = item;
-		this.engine = engine;
-	}
-
-	public void actionPerformed(ActionEvent ae) {
-		if (item.getIsCategory()) {
-			// load another category
-			engine.switchCategory((Category) item);
-		} else {
-			engine.addToSentence((Symbol)item);
-		}
-	}
-}
-
-class SentenceItemListener implements ActionListener {
-	private final Symbol symbol;
-	private final Engine engine;
-
-	SentenceItemListener(Symbol symbol, Engine engine) {
-		this.symbol = symbol;
-		this.engine = engine;
-	}
-
-	public void actionPerformed(ActionEvent ae) {
-		// remove from sentence
-		engine.removeFromSentence(symbol);
-	}
-}
-
-class PathPanelItemListener implements ActionListener {
-	private final Category category;
-	private final Engine engine;
-
-	PathPanelItemListener(Category category, Engine engine) {
-		this.category = category;
-		this.engine = engine;
-	}
-
-	public void actionPerformed(ActionEvent ae) {
-		engine.switchCategory(category);
 	}
 }
 
