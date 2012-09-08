@@ -29,6 +29,8 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.BevelBorder;
 
+import uk.co.timwise.wraplayout.WrapLayout;
+
 import commsbook.Engine;
 import commsbook.model.*;
 
@@ -176,8 +178,7 @@ public class MainWindow {
 		panel_container.add(lblLib, gbc_lblLib);
 		
 				panel_category = new JPanel();
-				FlowLayout flowLayout = (FlowLayout) panel_category.getLayout();
-				flowLayout.setAlignment(FlowLayout.LEADING);
+				panel_category.setLayout(new WrapLayout());
 				panel_category.setBackground(Color.WHITE);
 				panel_category.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				GridBagConstraints gbc_panel_library = new GridBagConstraints();
