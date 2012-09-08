@@ -110,6 +110,11 @@ public class MainWindow {
 		menuBar.add(mnHelp);
 
 		JMenuItem mntmAbout = new JMenuItem("About");
+		mntmAbout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new About().setVisible(true);
+			}
+		});
 		mnHelp.add(mntmAbout);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 
