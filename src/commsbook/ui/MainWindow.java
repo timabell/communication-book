@@ -55,6 +55,8 @@ public class MainWindow {
 
 	private final Engine engine;
 
+	private JPanel panel_current;
+
 	/**
 	 * Create the application.
 	 * @param engine 
@@ -233,7 +235,7 @@ public class MainWindow {
 				gbc_lblCurrent.gridy = 4;
 				panel_container.add(lblCurrent, gbc_lblCurrent);
 				
-				JPanel panel_current = new JPanel();
+				panel_current = new JPanel();
 				panel_current.setBorder(new LineBorder(new Color(0, 0, 0)));
 				panel_current.setBackground(Color.WHITE);
 				GridBagConstraints gbc_panel_current = new GridBagConstraints();
@@ -271,6 +273,34 @@ public class MainWindow {
 		}
 		panel_path.revalidate();
 		panel_path.repaint();
+		repaintCurrentPanel();
+	}
+
+	private void repaintCurrentPanel() {
+		panel_current.removeAll();
+		ImageIcon icon;
+		Category category = engine.getSelectedCategory();
+		String name = category.getName();
+		String iconPath = category.getIconPath();
+		if (iconPath == null) {
+			URL resource = getClass().getResource(
+					"/commsbook/resources/folder.png");
+			icon = new ImageIcon(resource, name);
+		} else {
+			icon = new ImageIcon(iconPath, name);
+		}
+		JButton pathItemButton = new JButton(icon);
+		pathItemButton.setText(name);
+		pathItemButton.setBackground(Color.WHITE); // TODO: doesn't seem to
+												// work in ubuntu. hrmm.
+		pathItemButton.setVerticalTextPosition(JButton.BOTTOM);
+		pathItemButton.setHorizontalTextPosition(JButton.CENTER);
+		pathItemButton.setVerticalAlignment(JButton.BOTTOM);
+		pathItemButton.setHorizontalAlignment(JButton.CENTER);
+		pathItemButton.setMargin(symbolInsets);
+		panel_current.add(pathItemButton);
+		panel_current.revalidate();
+		panel_current.repaint();
 	}
 
 	public void repaintCategory() {

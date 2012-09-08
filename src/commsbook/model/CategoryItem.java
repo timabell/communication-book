@@ -6,7 +6,7 @@ package commsbook.model;
  * @author tim
  */
 public abstract class CategoryItem implements Comparable<CategoryItem> {
-	private String name;
+	protected String name;
 	protected String iconPath;
 
 	/**

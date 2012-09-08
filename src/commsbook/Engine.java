@@ -18,15 +18,16 @@ public class Engine {
 	private List<Category> categoryPath = new ArrayList<Category>();
 	private StateChangeListener sentenceListener;
 	private StateChangeListener categoryListener;
+	private Category topCategory;
 	
 	public void loadLibrary(File folder){
 		// clear path for previous library if any
 		categoryPath.clear();
 
-		// load the new library's top level category for display
-		selectedCategory = Category.load(folder);
-		selectedCategory.setName("Back to start"); // Make it clearer how to get back to top.
-		categoryPath.add(selectedCategory);
+		topCategory = Category.load(folder);
+		topCategory.setName("Back to start"); // Make it clearer how to get back to top.
+
+		selectedCategory = topCategory; // TODO, differentiate between back to start and home
 
 		// fire events to reload whole UI
 		categoryListener.stateChanged();
@@ -35,17 +36,23 @@ public class Engine {
 	public void switchCategory(Category category) {
 		selectedCategory = category;
 
+		Category parent = category.getParent();
+
 		// update path with new location in library (i.e. the breadcrumb trail navigation)
-		if (categoryPath.contains(category)){
-			// remove everything after selected category (starting at the end first)
+		if (parent == null) {
+			// at the top level, just clear everything
+			categoryPath.clear();
+		} else if (categoryPath.contains(parent)){
+			// everything after the current parent
 			for (int i = categoryPath.size() - 1; i >= 0; i--){
-				if (categoryPath.get(i) == category){
+				if (categoryPath.get(i) == parent){
 					break;
 				}
 				categoryPath.remove(i);
 			}
 		} else {
-			categoryPath.add(selectedCategory);
+			// new category selected, add the parent to the path
+			categoryPath.add(parent);
 		}
 
 		category.loadContents();
@@ -73,10 +80,10 @@ public class Engine {
 	}
 
 	public List<CategoryItem> getCurrentCategoryItems(){
-		if (selectedCategory == null){
+		if (getSelectedCategory() == null){
 			return new ArrayList<CategoryItem>();
 		}
-		return selectedCategory.getSymbols();
+		return getSelectedCategory().getSymbols();
 	}
 	
 	public void setSentenceListener(StateChangeListener sentenceListener) {
@@ -89,6 +96,14 @@ public class Engine {
 
 	public List<Category> getCategoryPath() {
 		return categoryPath;
+	}
+
+	public Category getSelectedCategory() {
+		return selectedCategory;
+	}
+
+	public void setSelectedCategory(Category selectedCategory) {
+		this.selectedCategory = selectedCategory;
 	}
 
 	public interface StateChangeListener{

@@ -12,6 +12,13 @@ import java.util.List;
 public class Category extends CategoryItem {
 	private List<CategoryItem> items = new ArrayList<CategoryItem>();
 	private File folder;
+	private Category parent;
+
+	public Category(String name, File folder, Category parent) {
+		this.name = name;
+		this.folder = folder;
+		this.parent = parent;
+	}
 
 	/**
 	 * @return the symbols
@@ -21,13 +28,11 @@ public class Category extends CategoryItem {
 	}
 
 	public static Category load(File folder) {
-		return load(folder, true);
+		return load(folder, true, null);
 	}
 
-	public static Category load(File folder, boolean scanForItems) {
-		Category category = new Category();
-		category.setName(folder.getName());
-		category.folder = folder;
+	public static Category load(File folder, boolean scanForItems, Category parent) {
+		Category category = new Category(folder.getName(), folder, parent);
 
 		File iconFile = new File(folder, "category-symbol.png");
 		if (iconFile.exists()) {
@@ -58,7 +63,8 @@ public class Category extends CategoryItem {
 					}
 					items.add(Symbol.Load(file));
 				} else if (file.isDirectory()) {
-					items.add(Category.load(file, false)); // avoid recursive load
+					 // Load only basic category info to avoid recursive load, loading subcategories will be on demand.
+					items.add(Category.load(file, false, this));
 				}
 			}
 		}
@@ -78,5 +84,9 @@ public class Category extends CategoryItem {
 	@Override
 	public String toString() {
 		return "Category: " + getName();
+	}
+
+	public Category getParent() {
+		return parent;
 	}
 }
