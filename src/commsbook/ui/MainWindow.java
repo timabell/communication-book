@@ -170,6 +170,7 @@ public class MainWindow {
 				panel_sentence = new JPanel();
 				scrollPane_1.setViewportView(panel_sentence);
 				FlowLayout flowLayout_1 = (FlowLayout) panel_sentence.getLayout();
+				flowLayout_1.setAlignOnBaseline(true);
 				flowLayout_1.setAlignment(FlowLayout.LEADING);
 				panel_sentence.setBackground(Color.WHITE);
 				panel_sentence.setBorder(BorderFactory.createLineBorder(Color.BLACK));
