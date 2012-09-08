@@ -10,10 +10,10 @@
 	<property name="debuglevel" value="source,lines,vars" />
 	<property name="target" value="1.6" />
 	<property name="source" value="1.6" />
-	<property name="version.num" value="0.5"/>
 	<path id="communication book.classpath">
 		<pathelement location="build/classes" />
 		<pathelement location="lib/freetts-1.2.2-bin/freetts-1.2/lib/freetts.jar" />
+		<pathelement location="lib/WrapLayout.jar" />
 	</path>
 	<target name="init">
 		<mkdir dir="build/classes" />
@@ -65,18 +65,18 @@
 			<classpath refid="communication book.classpath" />
 		</java>
 	</target>
-	<target name="jar" depends="build">
+	<target name="jar" depends="build,revision">
 		<jar destfile="dist/communication-book.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
 				<attribute name="Main-Class" value="commsbook.CommunicationBook" />
 				<attribute name="Class-Path" value="lib/WrapLayout.jar lib/freetts-1.2/lib/freetts.jar /usr/share/java/freetts.jar" />
-				<attribute name="Implementation-Version" value="${version.num}"/> 
+				<attribute name="Implementation-Version" value="${git.version}"/>
 			</manifest>
 			<fileset dir="build/classes" />
 		</jar>
 	</target>
 	<target name="zip" depends="jar">
-		<zip destfile="dist/communication-book-${version.num}.zip" duplicate="fail" whenempty="fail">
+		<zip destfile="dist/communication-book-${git.version}.zip" duplicate="fail" whenempty="fail">
 			<fileset dir="dist" includes="communication-book.jar"/>
 			<fileset dir="." includes="lib/"/>
 			<fileset dir="." includes="copyright"/>
@@ -85,7 +85,7 @@
 		</zip>
 	</target>
 	<target name="zip-bundle" depends="jar">
-		<zip destfile="dist/communication-book-${version.num}-bundle.zip" duplicate="fail" whenempty="fail">
+		<zip destfile="dist/communication-book-bundle-${git.version}.zip" duplicate="fail" whenempty="fail">
 			<fileset dir="dist" includes="communication-book.jar"/>
 			<fileset dir="." includes="lib/"/>
 			<fileset dir="." includes="copyright"/>
@@ -106,5 +106,19 @@
 	<target name="all" depends="zip-bundle,zip">
 	</target>
 	<target name="rebuild-all" depends="cleanall,zip-bundle,zip">
+	</target>
+
+	<target name="revision">
+		<exec executable="git" outputproperty="git.version">
+			<arg value="describe" />
+			<arg value="--always" />
+		</exec>
+		<exec executable="git" outputproperty="git.date">
+			<arg value="log" />
+			<arg value="--pretty=%ci" />
+			<arg value="-n 1" />
+			<arg value="HEAD" />
+		</exec>
+		<property name="version" value="${git.version} ${git.date}" />
 	</target>
 </project>
