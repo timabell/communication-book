@@ -11,13 +11,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
-import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class About extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
+	private JLabel lblVersion;
 
 	/**
 	 * Create the dialog.
@@ -36,6 +39,10 @@ public class About extends JDialog {
 		{
 			JLabel lblNewLabel = new JLabel("https://launchpad.net/communication");
 			contentPanel.add(lblNewLabel);
+		}
+		{
+			lblVersion = new JLabel("Version: no jar file");
+			contentPanel.add(lblVersion);
 		}
 		{
 			JScrollPane scrollPane = new JScrollPane();
@@ -57,6 +64,13 @@ public class About extends JDialog {
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
+		}
+	}
+
+	public void ShowVersion(){
+		String implementationVersion = About.class.getPackage().getImplementationVersion();
+		if (implementationVersion != null){
+			lblVersion.setText("Version: " + implementationVersion);
 		}
 	}
 

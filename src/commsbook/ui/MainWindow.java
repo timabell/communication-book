@@ -112,7 +112,9 @@ public class MainWindow {
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mntmAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new About().setVisible(true);
+				About about = new About();
+				about.ShowVersion();
+				about.setVisible(true);
 			}
 		});
 		mnHelp.add(mntmAbout);
