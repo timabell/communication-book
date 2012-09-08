@@ -35,6 +35,7 @@ import commsbook.Engine;
 import commsbook.model.*;
 
 import commsbook.ui.actionlisteners.*;
+import javax.swing.JScrollPane;
 
 public class MainWindow {
 
@@ -155,7 +156,7 @@ public class MainWindow {
 				panel_sentence.setBackground(Color.WHITE);
 				panel_sentence.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				GridBagConstraints gbc_panel_sentence = new GridBagConstraints();
-				gbc_panel_sentence.insets = new Insets(0, 0, 5, 5);
+				gbc_panel_sentence.insets = new Insets(0, 0, 5, 0);
 				gbc_panel_sentence.fill = GridBagConstraints.BOTH;
 				gbc_panel_sentence.gridx = 1;
 				gbc_panel_sentence.gridy = 1;
@@ -172,29 +173,31 @@ public class MainWindow {
 		JLabel lblLib = new JLabel("Symbols and categories, click to select:");
 		GridBagConstraints gbc_lblLib = new GridBagConstraints();
 		gbc_lblLib.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblLib.insets = new Insets(0, 0, 5, 5);
+		gbc_lblLib.insets = new Insets(0, 0, 5, 0);
 		gbc_lblLib.gridx = 1;
 		gbc_lblLib.gridy = 2;
 		panel_container.add(lblLib, gbc_lblLib);
+				
+				JScrollPane scrollPane = new JScrollPane();
+				GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+				gbc_scrollPane.fill = GridBagConstraints.BOTH;
+				gbc_scrollPane.gridx = 1;
+				gbc_scrollPane.gridy = 3;
+				panel_container.add(scrollPane, gbc_scrollPane);
 		
 				panel_category = new JPanel();
+				scrollPane.setViewportView(panel_category);
 				WrapLayout wl_panel_category = new WrapLayout();
 				wl_panel_category.setAlignment(FlowLayout.LEFT);
 				panel_category.setLayout(wl_panel_category);
 				panel_category.setBackground(Color.WHITE);
 				panel_category.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-				GridBagConstraints gbc_panel_library = new GridBagConstraints();
-				gbc_panel_library.insets = new Insets(0, 0, 5, 5);
-				gbc_panel_library.fill = GridBagConstraints.BOTH;
-				gbc_panel_library.gridx = 1;
-				gbc_panel_library.gridy = 3;
-				panel_container.add(panel_category, gbc_panel_library);
 		
 		panel_path = new JPanel();
 		panel_path.setBackground(Color.WHITE);
 		panel_path.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		GridBagConstraints gbc_panel_path = new GridBagConstraints();
-		gbc_panel_path.insets = new Insets(0, 5, 5, 5);
+		gbc_panel_path.insets = new Insets(0, 5, 0, 5);
 		gbc_panel_path.fill = GridBagConstraints.BOTH;
 		gbc_panel_path.gridx = 0;
 		gbc_panel_path.gridy = 3;
