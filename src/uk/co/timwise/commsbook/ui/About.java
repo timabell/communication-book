@@ -1,4 +1,4 @@
-package commsbook.ui;
+package uk.co.timwise.commsbook.ui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

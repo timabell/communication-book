@@ -1,4 +1,4 @@
-package commsbook.ui;
+package uk.co.timwise.commsbook.ui;
 
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;

@@ -1,10 +1,11 @@
-package commsbook.ui.actionlisteners;
+package uk.co.timwise.commsbook.ui.actionlisteners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import commsbook.Engine;
-import commsbook.model.Category;
+import uk.co.timwise.commsbook.Engine;
+import uk.co.timwise.commsbook.model.Category;
+
 
 public class PathPanelItemListener implements ActionListener {
 	private final Category category;

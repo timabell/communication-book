@@ -1,4 +1,4 @@
-package commsbook.model;
+package uk.co.timwise.commsbook.model;
 
 import java.io.File;
 import java.util.ArrayList;

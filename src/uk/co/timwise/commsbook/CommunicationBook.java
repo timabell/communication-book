@@ -1,14 +1,15 @@
-package commsbook;
+package uk.co.timwise.commsbook;
 
 import java.awt.EventQueue;
 import java.io.File;
 
+import uk.co.timwise.commsbook.Engine.StateChangeListener;
+import uk.co.timwise.commsbook.ui.MainWindow;
+import uk.co.timwise.commsbook.ui.Speech;
+
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
-import commsbook.Engine.StateChangeListener;
-import commsbook.ui.MainWindow;
-import commsbook.ui.Speech;
 
 /**
  * This is the startup class for the app. Contains command line argument

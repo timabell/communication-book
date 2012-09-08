@@ -1,4 +1,4 @@
-package commsbook.ui;
+package uk.co.timwise.commsbook.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,12 +29,12 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.BevelBorder;
 
+import uk.co.timwise.commsbook.Engine;
+import uk.co.timwise.commsbook.model.*;
+import uk.co.timwise.commsbook.ui.actionlisteners.*;
 import uk.co.timwise.wraplayout.WrapLayout;
 
-import commsbook.Engine;
-import commsbook.model.*;
 
-import commsbook.ui.actionlisteners.*;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
@@ -249,17 +249,8 @@ public class MainWindow {
 	private void repaintPathPanel() {
 		panel_path.removeAll();
 		for (Category category : engine.getCategoryPath()) {
-			ImageIcon icon;
 			String name = category.getName();
-			String iconPath = category.getIconPath();
-			if (iconPath == null) {
-				URL resource = getClass().getResource(
-						"/commsbook/resources/folder.png");
-				icon = new ImageIcon(resource, name);
-			} else {
-				icon = new ImageIcon(iconPath, name);
-			}
-			JButton pathItemButton = new JButton(icon);
+			JButton pathItemButton = new JButton(getIcon(category));
 			pathItemButton.setText(name);
 			pathItemButton.setBackground(Color.WHITE); // TODO: doesn't seem to
 													// work in ubuntu. hrmm.
@@ -280,17 +271,9 @@ public class MainWindow {
 		panel_current.removeAll();
 		ImageIcon icon;
 		Category category = engine.getSelectedCategory();
-		String name = category.getName();
-		String iconPath = category.getIconPath();
-		if (iconPath == null) {
-			URL resource = getClass().getResource(
-					"/commsbook/resources/folder.png");
-			icon = new ImageIcon(resource, name);
-		} else {
-			icon = new ImageIcon(iconPath, name);
-		}
-		JButton pathItemButton = new JButton(icon);
-		pathItemButton.setText(name);
+
+		JButton pathItemButton = new JButton(getIcon(category));
+		pathItemButton.setText(category.getName());
 		pathItemButton.setBackground(Color.WHITE); // TODO: doesn't seem to
 												// work in ubuntu. hrmm.
 		pathItemButton.setVerticalTextPosition(JButton.BOTTOM);
@@ -302,25 +285,27 @@ public class MainWindow {
 		panel_current.revalidate();
 		panel_current.repaint();
 	}
+	
+	private ImageIcon getIcon(CategoryItem item){
+		String name = item.getName();
+		String iconPath = item.getIconPath();
+		if (iconPath == null && item.getIsCategory()) {
+			URL resource = getClass().getResource(
+					"/uk/co/timwise/commsbook/resources/folder.png");
+			return new ImageIcon(resource, name);
+		} else {
+			return new ImageIcon(iconPath, name);
+		}
+	}
 
 	public void repaintCategory() {
-		ImageIcon icon;
 		String name;
-		String iconPath;
 		panel_category.removeAll(); // clear the existing category
 		// display (or initial prompt)
 		// load the images into the visual library
 		for (CategoryItem item : engine.getCurrentCategoryItems()) {
 			name = item.getName();
-			iconPath = item.getIconPath();
-			if (iconPath == null) {
-				URL resource = getClass().getResource(
-						"/commsbook/resources/folder.png");
-				icon = new ImageIcon(resource, name);
-			} else {
-				icon = new ImageIcon(iconPath, name);
-			}
-			JButton libraryItem = new JButton(icon);
+			JButton libraryItem = new JButton(getIcon(item));
 			libraryItem.setText(name);
 			libraryItem.setBackground(Color.WHITE); // TODO: doesn't seem to
 													// work in ubuntu. hrmm.
@@ -343,8 +328,7 @@ public class MainWindow {
 	}
 	
 	private JButton createSentenceButton(Symbol symbol){
-		ImageIcon icon = new ImageIcon(symbol.getIconPath(), symbol.getName());
-		JButton libraryItem = new JButton(icon);
+		JButton libraryItem = new JButton(getIcon(symbol));
 		libraryItem.setText(symbol.getName());
 		libraryItem.setBackground(Color.WHITE); // TODO: doesn't seem to
 												// work in ubuntu. hrmm.

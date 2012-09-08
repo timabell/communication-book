@@ -1,11 +1,12 @@
-package commsbook;
+package uk.co.timwise.commsbook;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
 
-import commsbook.model.*;
+import uk.co.timwise.commsbook.model.*;
+
 
 /**
  * This class manages the state of the library / sentence / display,

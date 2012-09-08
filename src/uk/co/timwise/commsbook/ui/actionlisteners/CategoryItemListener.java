@@ -1,12 +1,13 @@
-package commsbook.ui.actionlisteners;
+package uk.co.timwise.commsbook.ui.actionlisteners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import commsbook.Engine;
-import commsbook.model.Category;
-import commsbook.model.CategoryItem;
-import commsbook.model.Symbol;
+import uk.co.timwise.commsbook.Engine;
+import uk.co.timwise.commsbook.model.Category;
+import uk.co.timwise.commsbook.model.CategoryItem;
+import uk.co.timwise.commsbook.model.Symbol;
+
 
 public class CategoryItemListener implements ActionListener {
 	private final CategoryItem item;

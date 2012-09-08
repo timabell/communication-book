@@ -1,4 +1,4 @@
-package commsbook.model;
+package uk.co.timwise.commsbook.model;
 
 /**
  * Base class to allow a mixed display of categories and symbols

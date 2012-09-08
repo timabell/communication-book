@@ -1,10 +1,11 @@
-package commsbook.ui.actionlisteners;
+package uk.co.timwise.commsbook.ui.actionlisteners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import commsbook.Engine;
-import commsbook.model.Symbol;
+import uk.co.timwise.commsbook.Engine;
+import uk.co.timwise.commsbook.model.Symbol;
+
 
 public class SentenceItemListener implements ActionListener {
 	private final Symbol symbol;
