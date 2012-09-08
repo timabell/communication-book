@@ -178,7 +178,9 @@ public class MainWindow {
 		panel_container.add(lblLib, gbc_lblLib);
 		
 				panel_category = new JPanel();
-				panel_category.setLayout(new WrapLayout());
+				WrapLayout wl_panel_category = new WrapLayout();
+				wl_panel_category.setAlignment(FlowLayout.LEFT);
+				panel_category.setLayout(wl_panel_category);
 				panel_category.setBackground(Color.WHITE);
 				panel_category.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				GridBagConstraints gbc_panel_library = new GridBagConstraints();
