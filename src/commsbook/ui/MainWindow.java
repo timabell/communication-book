@@ -190,6 +190,21 @@ public class MainWindow {
 		gbc_lblLib.gridy = 2;
 		panel_container.add(lblLib, gbc_lblLib);
 				
+				JScrollPane scrollPane_2 = new JScrollPane();
+				scrollPane_2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				GridBagConstraints gbc_scrollPane_2 = new GridBagConstraints();
+				gbc_scrollPane_2.fill = GridBagConstraints.BOTH;
+				gbc_scrollPane_2.insets = new Insets(0, 0, 0, 5);
+				gbc_scrollPane_2.gridx = 0;
+				gbc_scrollPane_2.gridy = 3;
+				panel_container.add(scrollPane_2, gbc_scrollPane_2);
+				
+				panel_path = new JPanel();
+				scrollPane_2.setViewportView(panel_path);
+				panel_path.setBackground(Color.WHITE);
+				panel_path.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				panel_path.setLayout(new BoxLayout(panel_path, BoxLayout.Y_AXIS));
+				
 				JScrollPane scrollPane = new JScrollPane();
 				GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 				gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -204,17 +219,6 @@ public class MainWindow {
 				panel_category.setLayout(wl_panel_category);
 				panel_category.setBackground(Color.WHITE);
 				panel_category.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		panel_path = new JPanel();
-		panel_path.setBackground(Color.WHITE);
-		panel_path.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		GridBagConstraints gbc_panel_path = new GridBagConstraints();
-		gbc_panel_path.insets = new Insets(0, 5, 0, 5);
-		gbc_panel_path.fill = GridBagConstraints.BOTH;
-		gbc_panel_path.gridx = 0;
-		gbc_panel_path.gridy = 3;
-		panel_container.add(panel_path, gbc_panel_path);
-		panel_path.setLayout(new BoxLayout(panel_path, BoxLayout.Y_AXIS));
 	}
 
 	private void repaintPathPanel() {
