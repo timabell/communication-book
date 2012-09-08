@@ -54,13 +54,13 @@
 		<antcall target="build" />
 	</target>
 	<target name="run - open library">
-		<java classname="commsbook.AppWindow" failonerror="true" fork="yes">
+		<java classname="commsbook.CommunicationBook" failonerror="true" fork="yes">
 			<arg line="-library /home/tim/projects/communication-book/library/" />
 			<classpath refid="communication book.classpath" />
 		</java>
 	</target>
 	<target name="run - test voice">
-		<java classname="commsbook.AppWindow" failonerror="true" fork="yes">
+		<java classname="commsbook.CommunicationBook" failonerror="true" fork="yes">
 			<arg line="-t" />
 			<classpath refid="communication book.classpath" />
 		</java>
@@ -68,8 +68,8 @@
 	<target name="jar" depends="build">
 		<jar destfile="dist/communication-book.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
-				<attribute name="Main-Class" value="commsbook.AppWindow" />
-				<attribute name="Class-Path" value="/usr/share/java/freetts.jar freetts-1.2/lib/freetts.jar" />
+				<attribute name="Main-Class" value="commsbook.CommunicationBook" />
+				<attribute name="Class-Path" value="lib/WrapLayout.jar lib/freetts-1.2/lib/freetts.jar /usr/share/java/freetts.jar" />
 				<attribute name="Implementation-Version" value="${version.num}"/> 
 			</manifest>
 			<fileset dir="build/classes" />
@@ -78,7 +78,7 @@
 	<target name="zip" depends="jar">
 		<zip destfile="dist/communication-book-${version.num}.zip" duplicate="fail" whenempty="fail">
 			<fileset dir="dist" includes="communication-book.jar"/>
-			<fileset dir="lib/freetts-1.2.2-bin/"/>
+			<fileset dir="." includes="lib/"/>
 			<fileset dir="." includes="copyright"/>
 			<fileset dir="." includes="GPL-3"/>
 			<fileset dir="." includes="README.txt"/>
@@ -87,11 +87,12 @@
 	<target name="zip-bundle" depends="jar">
 		<zip destfile="dist/communication-book-${version.num}-bundle.zip" duplicate="fail" whenempty="fail">
 			<fileset dir="dist" includes="communication-book.jar"/>
-			<fileset dir="lib/freetts-1.2.2-bin/"/>
+			<fileset dir="." includes="lib/"/>
 			<fileset dir="." includes="copyright"/>
 			<fileset dir="." includes="GPL-3"/>
 			<fileset dir="." includes="README.txt"/>
 			<fileset dir="." includes="communication-book-bundle.bat"/>
+			<fileset dir="." includes="communication-book-bundle.sh"/>
 			<fileset dir="../">
 				<!-- 
 					Note ../Symbols is *not* in source control, and the latest official Symbol library

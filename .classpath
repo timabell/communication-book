@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/usr/share/java/freetts.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/tim/projects/WrapLayout.git/dist/WrapLayout-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/WrapLayout.jar"/>
+	<classpathentry kind="lib" path="lib/freetts-1.2.2-bin/freetts-1.2/lib/freetts.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
