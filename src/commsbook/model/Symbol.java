@@ -16,7 +16,7 @@ public class Symbol extends CategoryItem {
 			// strip off the file extension
 			filename = filename.substring(0, filename.lastIndexOf('.'));
 		}
-		symbol.name = filename;
+		symbol.setName(filename);
 		return symbol;
 	}
 

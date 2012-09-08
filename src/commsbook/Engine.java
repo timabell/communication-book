@@ -25,6 +25,7 @@ public class Engine {
 
 		// load the new library's top level category for display
 		selectedCategory = Category.load(folder);
+		selectedCategory.setName("Back to start"); // Make it clearer how to get back to top.
 		categoryPath.add(selectedCategory);
 
 		// fire events to reload whole UI

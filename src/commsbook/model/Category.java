@@ -11,8 +11,6 @@ import java.util.List;
  */
 public class Category extends CategoryItem {
 	private List<CategoryItem> items = new ArrayList<CategoryItem>();
-	protected String name;
-	protected String iconPath;
 	private File folder;
 
 	/**
@@ -28,7 +26,7 @@ public class Category extends CategoryItem {
 
 	public static Category load(File folder, boolean scanForItems) {
 		Category category = new Category();
-		category.name = folder.getName();
+		category.setName(folder.getName());
 		category.folder = folder;
 
 		File iconFile = new File(folder, "category-symbol.png");
@@ -68,16 +66,8 @@ public class Category extends CategoryItem {
 		Collections.sort(items);
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public String getPath() {
 		return folder.getPath();
-	}
-
-	public String getIconPath() {
-		return iconPath;
 	}
 
 	@Override

@@ -6,7 +6,7 @@ package commsbook.model;
  * @author tim
  */
 public abstract class CategoryItem implements Comparable<CategoryItem> {
-	protected String name;
+	private String name;
 	protected String iconPath;
 
 	/**
@@ -14,6 +14,11 @@ public abstract class CategoryItem implements Comparable<CategoryItem> {
 	 */
 	public String getName() {
 		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
