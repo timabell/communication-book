@@ -125,7 +125,7 @@ public class MainWindow {
 		frame.getContentPane().add(panel_container, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_container = new GridBagLayout();
 		gbl_panel_container.columnWidths = new int[] { 120, 300 };
-		gbl_panel_container.rowHeights = new int[] { 10, 110, 10, 300 };
+		gbl_panel_container.rowHeights = new int[] {10, 120, 10, 300};
 		gbl_panel_container.columnWeights = new double[] { Double.MIN_VALUE, 1.0 };
 		gbl_panel_container.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0 };
 		panel_container.setLayout(gbl_panel_container);
