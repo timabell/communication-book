@@ -36,6 +36,7 @@ import commsbook.model.*;
 
 import commsbook.ui.actionlisteners.*;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class MainWindow {
 
@@ -156,18 +157,22 @@ public class MainWindow {
 				gbc_btnNewButton.gridx = 0;
 				gbc_btnNewButton.gridy = 0;
 				panel_container.add(btnNewButton, gbc_btnNewButton);
+				
+				JScrollPane scrollPane_1 = new JScrollPane();
+				scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+				GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
+				gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
+				gbc_scrollPane_1.insets = new Insets(0, 0, 5, 0);
+				gbc_scrollPane_1.gridx = 1;
+				gbc_scrollPane_1.gridy = 1;
+				panel_container.add(scrollPane_1, gbc_scrollPane_1);
 		
 				panel_sentence = new JPanel();
+				scrollPane_1.setViewportView(panel_sentence);
 				FlowLayout flowLayout_1 = (FlowLayout) panel_sentence.getLayout();
 				flowLayout_1.setAlignment(FlowLayout.LEADING);
 				panel_sentence.setBackground(Color.WHITE);
 				panel_sentence.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-				GridBagConstraints gbc_panel_sentence = new GridBagConstraints();
-				gbc_panel_sentence.insets = new Insets(0, 0, 5, 0);
-				gbc_panel_sentence.fill = GridBagConstraints.BOTH;
-				gbc_panel_sentence.gridx = 1;
-				gbc_panel_sentence.gridy = 1;
-				panel_container.add(panel_sentence, gbc_panel_sentence);
 		
 		JLabel lblUp = new JLabel("Back to:");
 		GridBagConstraints gbc_lblUp = new GridBagConstraints();
