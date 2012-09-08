@@ -37,6 +37,7 @@ import commsbook.model.*;
 import commsbook.ui.actionlisteners.*;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.LineBorder;
 
 public class MainWindow {
 
@@ -125,9 +126,9 @@ public class MainWindow {
 		frame.getContentPane().add(panel_container, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_container = new GridBagLayout();
 		gbl_panel_container.columnWidths = new int[] { 120, 300 };
-		gbl_panel_container.rowHeights = new int[] {10, 120, 10, 300};
+		gbl_panel_container.rowHeights = new int[] {10, 120, 10, 200, 10, 110};
 		gbl_panel_container.columnWeights = new double[] { Double.MIN_VALUE, 1.0 };
-		gbl_panel_container.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0 };
+		gbl_panel_container.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0 };
 		panel_container.setLayout(gbl_panel_container);
 
 		JLabel lblNewLabel = new JLabel(
@@ -158,17 +159,17 @@ public class MainWindow {
 				gbc_btnNewButton.gridy = 0;
 				panel_container.add(btnNewButton, gbc_btnNewButton);
 				
-				JScrollPane scrollPane_1 = new JScrollPane();
-				scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-				GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
-				gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
-				gbc_scrollPane_1.insets = new Insets(0, 0, 5, 0);
-				gbc_scrollPane_1.gridx = 1;
-				gbc_scrollPane_1.gridy = 1;
-				panel_container.add(scrollPane_1, gbc_scrollPane_1);
+				JScrollPane scroll_sentence = new JScrollPane();
+				scroll_sentence.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+				GridBagConstraints gbc_scroll_sentence = new GridBagConstraints();
+				gbc_scroll_sentence.fill = GridBagConstraints.BOTH;
+				gbc_scroll_sentence.insets = new Insets(0, 0, 5, 0);
+				gbc_scroll_sentence.gridx = 1;
+				gbc_scroll_sentence.gridy = 1;
+				panel_container.add(scroll_sentence, gbc_scroll_sentence);
 		
 				panel_sentence = new JPanel();
-				scrollPane_1.setViewportView(panel_sentence);
+				scroll_sentence.setViewportView(panel_sentence);
 				FlowLayout flowLayout_1 = (FlowLayout) panel_sentence.getLayout();
 				flowLayout_1.setAlignOnBaseline(true);
 				flowLayout_1.setAlignment(FlowLayout.LEADING);
@@ -191,35 +192,56 @@ public class MainWindow {
 		gbc_lblLib.gridy = 2;
 		panel_container.add(lblLib, gbc_lblLib);
 				
-				JScrollPane scrollPane_2 = new JScrollPane();
-				scrollPane_2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-				GridBagConstraints gbc_scrollPane_2 = new GridBagConstraints();
-				gbc_scrollPane_2.fill = GridBagConstraints.BOTH;
-				gbc_scrollPane_2.insets = new Insets(0, 0, 0, 5);
-				gbc_scrollPane_2.gridx = 0;
-				gbc_scrollPane_2.gridy = 3;
-				panel_container.add(scrollPane_2, gbc_scrollPane_2);
+				JScrollPane scroll_path = new JScrollPane();
+				scroll_path.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				GridBagConstraints gbc_scroll_path = new GridBagConstraints();
+				gbc_scroll_path.weighty = 1.0;
+				gbc_scroll_path.fill = GridBagConstraints.BOTH;
+				gbc_scroll_path.insets = new Insets(0, 0, 5, 5);
+				gbc_scroll_path.gridx = 0;
+				gbc_scroll_path.gridy = 3;
+				panel_container.add(scroll_path, gbc_scroll_path);
 				
 				panel_path = new JPanel();
-				scrollPane_2.setViewportView(panel_path);
+				scroll_path.setViewportView(panel_path);
 				panel_path.setBackground(Color.WHITE);
 				panel_path.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				panel_path.setLayout(new BoxLayout(panel_path, BoxLayout.Y_AXIS));
 				
-				JScrollPane scrollPane = new JScrollPane();
-				GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-				gbc_scrollPane.fill = GridBagConstraints.BOTH;
-				gbc_scrollPane.gridx = 1;
-				gbc_scrollPane.gridy = 3;
-				panel_container.add(scrollPane, gbc_scrollPane);
+				JScrollPane scroll_category = new JScrollPane();
+				GridBagConstraints gbc_scroll_category = new GridBagConstraints();
+				gbc_scroll_category.gridheight = 3;
+				gbc_scroll_category.insets = new Insets(0, 0, 5, 0);
+				gbc_scroll_category.fill = GridBagConstraints.BOTH;
+				gbc_scroll_category.gridx = 1;
+				gbc_scroll_category.gridy = 3;
+				panel_container.add(scroll_category, gbc_scroll_category);
 		
 				panel_category = new JPanel();
-				scrollPane.setViewportView(panel_category);
+				scroll_category.setViewportView(panel_category);
 				WrapLayout wl_panel_category = new WrapLayout();
 				wl_panel_category.setAlignment(FlowLayout.LEFT);
 				panel_category.setLayout(wl_panel_category);
 				panel_category.setBackground(Color.WHITE);
 				panel_category.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				
+				JLabel lblCurrent = new JLabel("Selected category:");
+				GridBagConstraints gbc_lblCurrent = new GridBagConstraints();
+				gbc_lblCurrent.fill = GridBagConstraints.BOTH;
+				gbc_lblCurrent.insets = new Insets(0, 0, 0, 5);
+				gbc_lblCurrent.gridx = 0;
+				gbc_lblCurrent.gridy = 4;
+				panel_container.add(lblCurrent, gbc_lblCurrent);
+				
+				JPanel panel_current = new JPanel();
+				panel_current.setBorder(new LineBorder(new Color(0, 0, 0)));
+				panel_current.setBackground(Color.WHITE);
+				GridBagConstraints gbc_panel_current = new GridBagConstraints();
+				gbc_panel_current.insets = new Insets(0, 0, 5, 5);
+				gbc_panel_current.fill = GridBagConstraints.BOTH;
+				gbc_panel_current.gridx = 0;
+				gbc_panel_current.gridy = 5;
+				panel_container.add(panel_current, gbc_panel_current);
 	}
 
 	private void repaintPathPanel() {
