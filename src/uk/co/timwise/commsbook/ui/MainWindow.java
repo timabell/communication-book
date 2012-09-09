@@ -143,6 +143,7 @@ public class MainWindow {
 		panel_container.add(lblNewLabel, gbc_lblNewLabel);
 		
 				JButton btnNewButton = new JButton("Speak");
+				btnNewButton.setIcon(new ImageIcon(MainWindow.class.getResource("/uk/co/timwise/commsbook/resources/audio-volume-high.png")));
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						Component[] components = panel_sentence.getComponents();
