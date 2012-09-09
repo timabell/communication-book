@@ -93,7 +93,7 @@
 			<fileset dir="." includes="README.txt"/>
 			<fileset dir="." includes="communication-book-bundle.bat"/>
 			<fileset dir="." includes="communication-book-bundle.sh"/>
-			<fileset dir="../">
+			<fileset dir=".">
 				<!-- 
 					Note ../Symbols is *not* in source control, and the latest official Symbol library
 					should be obtained and unzipped to this location before building the bundle
@@ -105,7 +105,7 @@
 	</target>
 	<target name="all" depends="zip-bundle,zip">
 	</target>
-	<target name="rebuild-all" depends="cleanall,zip-bundle,zip">
+	<target name="rebuild-all" depends="cleanall,all">
 	</target>
 
 	<target name="revision">
