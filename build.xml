@@ -54,13 +54,13 @@
 		<antcall target="build" />
 	</target>
 	<target name="run - open library">
-		<java classname="commsbook.CommunicationBook" failonerror="true" fork="yes">
+		<java classname="uk.co.timwise.commsbook.CommunicationBook" failonerror="true" fork="yes">
 			<arg line="-library /home/tim/projects/communication-book/library/" />
 			<classpath refid="communication book.classpath" />
 		</java>
 	</target>
 	<target name="run - test voice">
-		<java classname="commsbook.CommunicationBook" failonerror="true" fork="yes">
+		<java classname="uk.co.timwise.commsbook.CommunicationBook" failonerror="true" fork="yes">
 			<arg line="-t" />
 			<classpath refid="communication book.classpath" />
 		</java>
@@ -68,7 +68,7 @@
 	<target name="jar" depends="build,revision">
 		<jar destfile="dist/communication-book.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
-				<attribute name="Main-Class" value="commsbook.CommunicationBook" />
+				<attribute name="Main-Class" value="uk.co.timwise.commsbook.CommunicationBook" />
 				<attribute name="Class-Path" value="lib/WrapLayout.jar lib/freetts-1.2/lib/freetts.jar /usr/share/java/freetts.jar" />
 				<attribute name="Implementation-Version" value="${git.version}"/>
 			</manifest>
