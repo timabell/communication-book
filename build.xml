@@ -111,7 +111,7 @@
 	<target name="revision">
 		<exec executable="git" outputproperty="git.version">
 			<arg value="describe" />
-			<arg value="--always" />
+			<arg value="--tags" />
 		</exec>
 		<exec executable="git" outputproperty="git.date">
 			<arg value="log" />
