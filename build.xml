@@ -12,7 +12,7 @@
 	<property name="source" value="1.6" />
 	<path id="communication book.classpath">
 		<pathelement location="build/classes" />
-		<pathelement location="lib/freetts-1.2.2-bin/freetts-1.2/lib/freetts.jar" />
+		<pathelement location="lib/FreeTTS/freetts.jar" />
 		<pathelement location="lib/WrapLayout.jar" />
 	</path>
 	<target name="init">
@@ -69,11 +69,14 @@
 		<jar destfile="dist/communication-book.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
 				<attribute name="Main-Class" value="uk.co.timwise.commsbook.CommunicationBook" />
-				<attribute name="Class-Path" value="lib/WrapLayout.jar lib/freetts-1.2.2-bin/freetts-1.2/lib/freetts.jar /usr/share/java/freetts.jar" />
+				<attribute name="Class-Path" value="lib/WrapLayout.jar lib/FreeTTS/freetts.jar /usr/share/java/freetts.jar" />
 				<attribute name="Implementation-Version" value="${git.version}"/>
 			</manifest>
 			<fileset dir="build/classes" />
 		</jar>
+		<copy includeemptydirs="false" todir="dist">
+			<fileset dir="." includes="lib/"/>
+		</copy>
 	</target>
 	<target name="zip" depends="jar">
 		<zip destfile="dist/communication-book-${git.version}.zip" duplicate="fail" whenempty="fail">
